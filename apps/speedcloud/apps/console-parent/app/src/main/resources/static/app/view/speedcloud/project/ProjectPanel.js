@@ -1,7 +1,7 @@
 Ext.define('AM.view.speedcloud.project.ProjectPanel', {
     extend: 'Ext.panel.Panel'
     , xtype: 'speedcloud.project.ProjectPanel'
-    , title: '项目'
+    , title: '产品（项目）'
     , layout: 'border'
     , requires: [
         'AM.view.speedcloud.project.ProjectController'
@@ -29,13 +29,13 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                             ,menuDisabled: true
                             ,width:35
                             ,items: [{
-                                iconCls: 'x-fa fa-eye'
-                                ,tooltip: '详情'
-                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
+                                iconCls: 'x-fa fa-cog'
+                                ,tooltip: '明细'
+                                ,handler: function(grid, rowIndex, colIndex) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
-                                    me.showDetailWindow(record, this);
+                                    me.getController().onExecButtonClick();
                                 }
                             }]
                         }
@@ -75,7 +75,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                             ,renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
                                 return record.get("projectSetVO")?record.get("projectSetVO").name:'';
                             }
-                            ,text: '所属项目集'
+                            ,text: '所属产品线'
                             ,flex:1
                         }
                         ,{
@@ -83,7 +83,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'edit'
+                                iconCls: 'fas fa-pencil-alt'
                                 ,tooltip: '修改'
                                 ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
@@ -98,7 +98,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'delete'
+                                iconCls: 'fas fa-minus-circle red'
                                 ,tooltip: '删除'
                                 ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
@@ -119,7 +119,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                             items: [
                                 {
                                     xtype: 'button'
-                                    ,iconCls: 'add'
+                                    ,iconCls: 'fas fa-plus-circle'
                                     ,text: '新增'
                                     ,listeners: {
                                         click: 'onAddButtonClick'
@@ -127,7 +127,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'edit'
+                                    ,iconCls: 'fas fa-pencil-alt'
                                     ,text: '修改'
                                     ,listeners: {
                                         click: 'onEditButtonClick'
@@ -135,7 +135,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'delete'
+                                    ,iconCls: 'fas fa-minus-circle red'
                                     ,text: '删除'
                                     ,listeners: {
                                         click: 'onDeleteButtonClick'
@@ -144,7 +144,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                                 ,'-'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '查询'
                                     ,listeners: {
                                         click: 'onSimpleSearchButtonClick'
@@ -153,7 +153,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                                 ,'->'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '高级查询'
                                     ,listeners: {
                                         click: 'showSearchWindow'
@@ -161,7 +161,7 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '导出'
                                     ,listeners: {
                                         click: 'onExportButtonClick'
@@ -196,14 +196,6 @@ Ext.define('AM.view.speedcloud.project.ProjectPanel', {
         me.add({xtype:'speedcloud.project.ProjectDetailWindow',reference:'mainDetailWindow'})
 
         me.callParent(arguments);
-    }
-
-    ,showDetailWindow: function(model, targetComponent) {
-        var me = this;
-        var detailWindow = me.lookupReference('mainDetailWindow');
-        detailWindow.setModel(model);
-        detailWindow.show(targetComponent);
-        return detailWindow;
     }
 
     ,onBeforeShow:function(abstractcomponent, options) {

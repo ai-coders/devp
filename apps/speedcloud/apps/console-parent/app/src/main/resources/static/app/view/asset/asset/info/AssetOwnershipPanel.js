@@ -2,7 +2,7 @@ Ext.define('AM.view.asset.asset.info.AssetOwnershipPanel', {
     extend: 'Ext.panel.Panel'
     , xtype: 'asset.asset.info.AssetOwnershipPanel'
     , alias: 'widget.asset.asset.info.AssetOwnershipPanel'
-    , title: 'IT资产归属'
+    , title: '资产归属'
     , layout: 'border'
     , requires: [
         'AM.view.asset.asset.info.AssetOwnershipController'
@@ -239,7 +239,7 @@ Ext.define('AM.view.asset.asset.info.AssetOwnershipPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'fab fa-searchengin'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '查询'
                                     ,listeners: {
                                         click: 'onSimpleSearchButtonClick'

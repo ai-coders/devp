@@ -1,0 +1,34 @@
+eureka:
+  client:
+    enabled: true
+    serviceUrl:
+      # defaultZone: http://localhost:8761/eureka
+#      defaultZone: http://202.116.104.159:8761/eureka
+      defaultZone: http://qybl.daanlab.com:8761/eureka
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/speedcloud-monitor?useSSL=false&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=UTF-8&characterSetResults=UTF-8&allowMultiQueries=true
+    username: root
+    password: 123456
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: update
+  mail:
+    host: smtp.qq.com
+    port: 587
+    username: 2170290560@qq.com
+    password: sekhkgopnoroebcj
+
+aliyun:
+  sms:
+    accessKeyId: LTAIKAkguzKJkjsY
+    accessKeySecret: w2ygKmYFkv6HHXUV2AmPGsdCsmh193
+    signName: 鹰眼盯盘
+    type:
+      statueChange: SMS_152213274
+
+notify:
+  sms:
+    enable: true

@@ -8,7 +8,7 @@ Ext.define('AM.view.asset.asset.info.AssetCmdbSearchWindow', {
     ,layout: {
         type: 'fit'
     }
-    ,title: 'IT资产高级查询'
+    ,title: '资产高级查询'
     ,maximizable: true
     ,closeAction:'hide'
     ,initComponent: function () {
@@ -166,7 +166,7 @@ Ext.define('AM.view.asset.asset.info.AssetCmdbSearchWindow', {
                         }
                         ,{
                             xtype: 'button'
-                            ,iconCls: 'search'
+                            ,iconCls: 'fas fa-search'
                             ,text: '查询'
                             ,listeners: {
                                 click: {fn: me.onSearchButtonClick,scope: me}

@@ -13,7 +13,7 @@ Ext.define('AM.view.asset.asset.info.AssetCmdbAddWindow', {
     ,layout: {
         type: 'vbox'
     }
-    ,title: '添加新IT资产'
+    ,title: '添加新资产'
     ,maximizable: true
     ,closeAction: 'hide'
     ,initComponent: function () {
@@ -287,7 +287,7 @@ Ext.define('AM.view.asset.asset.info.AssetCmdbAddWindow', {
                         },
                         {
                             xtype: 'button',
-                            iconCls: 'accept',
+                            iconCls: 'fas fa-save',
                             text: '确定',
                             listeners: {
                                 click: {
@@ -322,7 +322,7 @@ Ext.define('AM.view.asset.asset.info.AssetCmdbAddWindow', {
         this.down('form').getForm().updateRecord(record);
         record.save({
             success: function (newRecord) {
-                Ext.MsgUtil.show('操作成功', '保存IT资产成功!');
+                Ext.MsgUtil.show('操作成功', '保存资产成功!');
                 me.down('form').getForm().loadRecord(newRecord);
                 me.fireEvent('saved');
                 me.hide(this.targetComp);

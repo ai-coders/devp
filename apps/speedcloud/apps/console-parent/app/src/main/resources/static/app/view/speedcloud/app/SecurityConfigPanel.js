@@ -1,7 +1,10 @@
 Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
     extend: 'Ext.panel.Panel'
     , xtype: 'speedcloud.app.SecurityConfigPanel'
+    , alias: 'widget.speedcloud.app.SecurityConfigPanel'
     , title: '应用私密配置'
+    , bodyCls: 'app-dashboard'
+    // , bodyPadding: '10 10'
     , layout: 'border'
     , requires: [
         'AM.view.speedcloud.app.SecurityConfigController'
@@ -12,15 +15,27 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
         ,'AM.view.speedcloud.app.SecurityConfigDetailWindow'
     ]
     ,controller: 'speedcloud.app.SecurityConfigController'
+    ,constructor:function(cfg){
+        var me = this;
+        cfg = cfg || {}
+
+        me.callParent([Ext.apply({
+            viewModel : {
+                stores:{
+                    store:Ext.create('AM.store.speedcloud.app.SecurityConfigStore').load()
+                }
+            }
+        }, cfg)])
+    }
     ,initComponent: function() {
         var me = this;
-
+        me.enableBubble('createMainTabPanel');
         Ext.apply(me, {
             items: [
                 {
                     xtype: 'grid'
                     ,region:'center'
-                    ,store: Ext.create('AM.store.speedcloud.app.SecurityConfigStore').load()
+                    ,bind:{store: '{store}'}
                     ,columnLines: true
                     ,reference:'mainGridPanel'
                     ,columns: [
@@ -31,7 +46,7 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                             ,items: [{
                                 iconCls: 'x-fa fa-eye'
                                 ,tooltip: '详情'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -65,9 +80,9 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'edit'
+                                iconCls: 'fas fa-pencil-alt'
                                 ,tooltip: '修改'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -80,9 +95,9 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'delete'
+                                iconCls: 'fas fa-minus-circle red'
                                 ,tooltip: '删除'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -101,7 +116,7 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                             items: [
                                 {
                                     xtype: 'button'
-                                    ,iconCls: 'add'
+                                    ,iconCls: 'fas fa-plus-circle'
                                     ,text: '新增'
                                     ,listeners: {
                                         click: 'onAddButtonClick'
@@ -109,7 +124,7 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'edit'
+                                    ,iconCls: 'fas fa-pencil-alt'
                                     ,text: '修改'
                                     ,listeners: {
                                         click: 'onEditButtonClick'
@@ -117,7 +132,7 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'delete'
+                                    ,iconCls: 'fas fa-minus-circle red'
                                     ,text: '删除'
                                     ,listeners: {
                                         click: 'onDeleteButtonClick'
@@ -126,7 +141,7 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                                 ,'-'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '查询'
                                     ,listeners: {
                                         click: 'onSimpleSearchButtonClick'
@@ -135,7 +150,7 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                                 ,'->'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search-plus'
                                     ,text: '高级查询'
                                     ,listeners: {
                                         click: 'showSearchWindow'
@@ -143,7 +158,7 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-download'
                                     ,text: '导出'
                                     ,listeners: {
                                         click: 'onExportButtonClick'
@@ -158,18 +173,19 @@ Ext.define('AM.view.speedcloud.app.SecurityConfigPanel', {
                         }
                     ]
                     ,selModel: 'checkboxmodel'
-                    ,listeners: {
-                        beforeshow: {
-                            fn: me.onBeforeShow
-                            ,scope: me
-                        }
-                        ,beforehide: {
-                            fn: me.onPanelBeforeHide
-                            ,scope: me
-                        }
-                    }
+                    ,listeners: {}
                 }
             ]
+            ,listeners: {
+            	beforeshow: {
+                    fn: me.onBeforeShow
+                    ,scope: me
+                }
+              	,beforehide: {
+                	fn: me.onPanelBeforeHide
+                  	,scope: me
+				}
+			}
         });
 
         me.add({xtype:'speedcloud.app.SecurityConfigAddWindow',reference:'mainAddWindow',listeners:{saved:'reloadStore'}})

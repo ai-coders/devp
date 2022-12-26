@@ -1,0 +1,1 @@
+# org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.yunkang.saas.bootstrap.config.client.feign.Oauth2ClientConfig

@@ -55,11 +55,11 @@ public class SchemeAddDto {
 
     /**所属项目（产品）*/
 	@ApiModelProperty(value = "所属项目（产品）", required = false, notes = "[所属项目]")
-	private Long project;
+	private String project;
 
     /**所属环境*/
 	@ApiModelProperty(value = "所属环境", required = false, notes = "[所属环境]")
-	private Long env;
+	private String env;
 
 
 	public Long getTid(){
@@ -132,17 +132,17 @@ public class SchemeAddDto {
 		this.notes = notes;
 	}
 
-	public Long getProject(){
+	public String getProject(){
         return project;
     }
-    public void setProject(Long project) {
+    public void setProject(String project) {
         this.project = project;
     }
 
-	public Long getEnv(){
+	public String getEnv(){
         return env;
     }
-    public void setEnv(Long env) {
+    public void setEnv(String env) {
         this.env = env;
     }
 

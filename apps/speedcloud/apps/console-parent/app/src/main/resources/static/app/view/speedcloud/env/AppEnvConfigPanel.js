@@ -1,43 +1,50 @@
 Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
     extend: 'Ext.panel.Panel'
     , xtype: 'speedcloud.env.AppEnvConfigPanel'
-    , title: '应用环境'
+    , alias: 'widget.speedcloud.env.AppEnvConfigPanel'
+    , title: '产品环境'
+    , bodyCls: 'app-dashboard'
+    // , bodyPadding: '10 10'
     , layout: 'border'
     , requires: [
         'AM.view.speedcloud.env.AppEnvConfigController'
         ,'AM.store.speedcloud.env.AppEnvConfigStore'
         ,'AM.view.speedcloud.env.AppEnvConfigAddWindow'
         ,'AM.view.speedcloud.env.AppEnvConfigEditWindow'
-        ,'AM.view.speedcloud.env.AppEnvConfigSearchWindow'
-        ,'AM.view.speedcloud.env.AppEnvConfigDetailWindow'
     ]
     ,controller: 'speedcloud.env.AppEnvConfigController'
+    ,constructor:function(cfg){
+        var me = this;
+        cfg = cfg || {}
+
+        me.callParent([Ext.apply({
+            viewModel : {
+                stores:{
+                    store:Ext.create('AM.store.speedcloud.env.AppEnvConfigStore').load()
+                }
+            }
+        }, cfg)])
+    }
     ,initComponent: function() {
         var me = this;
-
+        me.enableBubble('createMainTabPanel');
         Ext.apply(me, {
             items: [
                 {
                     xtype: 'grid'
                     ,region:'center'
-                    ,store: Ext.create('AM.store.speedcloud.env.AppEnvConfigStore').load()
+                    ,bind:{store: '{store}'}
                     ,columnLines: true
                     ,reference:'mainGridPanel'
                     ,columns: [
                         {
-                            xtype: 'actioncolumn'
-                            ,menuDisabled: true
-                            ,width:35
-                            ,items: [{
-                                iconCls: 'x-fa fa-eye'
-                                ,tooltip: '详情'
-                                ,handler: function(grid, rowIndex, colIndex) {
-                                    var record = grid.getStore().getAt(rowIndex);
-                                    grid.getSelectionModel().deselectAll()
-                                    grid.getSelectionModel().select(record)
-                                    me.showDetailWindow(record, this);
-                                }
-                            }]
+                            xtype: 'gridcolumn'
+                            ,dataIndex: 'project'
+                            ,renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
+                                return record.get("projectVO")?record.get("projectVO").name:'';
+                            }
+                            ,text: '所属产品（项目）'
+                            
                         }
                         ,{
                             xtype: 'gridcolumn'
@@ -48,16 +55,10 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                         ,{
                             xtype: 'gridcolumn'
                             ,dataIndex: 'level'
-                            ,text: '环境级别'
-                            
-                        }
-                        ,{
-                            xtype: 'gridcolumn'
-                            ,dataIndex: 'project'
                             ,renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                return record.get("projectVO")?record.get("projectVO").name:'';
+                                return record.get("levelVO")?record.get("levelVO").name:'';
                             }
-                            ,text: '所属项目（产品）'
+                            ,text: '环境级别'
                             
                         }
                         ,{
@@ -72,9 +73,9 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'edit'
+                                iconCls: 'fas fa-pencil-alt'
                                 ,tooltip: '修改'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -87,9 +88,9 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'delete'
+                                iconCls: 'fas fa-minus-circle red'
                                 ,tooltip: '删除'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -108,7 +109,7 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                             items: [
                                 {
                                     xtype: 'button'
-                                    ,iconCls: 'add'
+                                    ,iconCls: 'fas fa-plus-circle'
                                     ,text: '新增'
                                     ,listeners: {
                                         click: 'onAddButtonClick'
@@ -116,7 +117,7 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'edit'
+                                    ,iconCls: 'fas fa-pencil-alt'
                                     ,text: '修改'
                                     ,listeners: {
                                         click: 'onEditButtonClick'
@@ -124,7 +125,7 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'delete'
+                                    ,iconCls: 'fas fa-minus-circle red'
                                     ,text: '删除'
                                     ,listeners: {
                                         click: 'onDeleteButtonClick'
@@ -132,8 +133,18 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                                 }
                                 ,'-'
                                 ,{
+                                    xtype: 'combobox'
+                                    ,emptyText:'所属产品（项目）'
+                                    ,store: Ext.create("AM.store.speedcloud.project.ProjectStore")
+                                    ,typeAhead:false
+                                    ,editable:false
+                                    ,displayField:'name'
+                                    ,valueField:'id'
+                                    ,reference: 'projectField'
+                                }
+                                ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '查询'
                                     ,listeners: {
                                         click: 'onSimpleSearchButtonClick'
@@ -142,7 +153,7 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                                 ,'->'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search-plus'
                                     ,text: '高级查询'
                                     ,listeners: {
                                         click: 'showSearchWindow'
@@ -150,7 +161,7 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-download'
                                     ,text: '导出'
                                     ,listeners: {
                                         click: 'onExportButtonClick'
@@ -182,8 +193,6 @@ Ext.define('AM.view.speedcloud.env.AppEnvConfigPanel', {
 
         me.add({xtype:'speedcloud.env.AppEnvConfigAddWindow',reference:'mainAddWindow',listeners:{saved:'reloadStore'}})
         me.add({xtype:'speedcloud.env.AppEnvConfigEditWindow',reference:'mainEditWindow',listeners:{saved:'reloadStore'}})
-        me.add({xtype:'speedcloud.env.AppEnvConfigSearchWindow',reference:'mainSearchWindow',listeners:{saved:'doSearch'}})
-        me.add({xtype:'speedcloud.env.AppEnvConfigDetailWindow',reference:'mainDetailWindow'})
 
         me.callParent(arguments);
     }

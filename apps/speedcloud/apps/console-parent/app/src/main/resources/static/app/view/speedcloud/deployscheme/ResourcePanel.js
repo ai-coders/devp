@@ -91,9 +91,9 @@ Ext.define('AM.view.speedcloud.deployscheme.ResourcePanel', {
                         }
                         ,{
                             xtype: 'gridcolumn'
-                            ,dataIndex: 'evn'
+                            ,dataIndex: 'env'
                             ,renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                return record.get("evnVO")?record.get("evnVO").name:'';
+                                return record.get("envVO")?record.get("envVO").name:'';
                             }
                             ,text: '所属环境'
                             
@@ -207,7 +207,7 @@ Ext.define('AM.view.speedcloud.deployscheme.ResourcePanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '查询'
                                     ,listeners: {
                                         click: 'onSimpleSearchButtonClick'
@@ -216,7 +216,7 @@ Ext.define('AM.view.speedcloud.deployscheme.ResourcePanel', {
                                 ,'->'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '高级查询'
                                     ,listeners: {
                                         click: 'showSearchWindow'
@@ -224,7 +224,7 @@ Ext.define('AM.view.speedcloud.deployscheme.ResourcePanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '导出'
                                     ,listeners: {
                                         click: 'onExportButtonClick'

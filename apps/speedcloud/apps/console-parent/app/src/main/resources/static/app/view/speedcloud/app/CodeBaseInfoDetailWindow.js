@@ -7,7 +7,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoDetailWindow', {
     ,layout: {
         type: 'fit'
     }
-    ,title: '代码库详细信息详细信息'
+    ,title: '代码基本信息详细信息'
     ,maximizable: true
     ,closeAction:'hide'
     ,initComponent: function () {
@@ -31,15 +31,13 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoDetailWindow', {
                     }
                     ,items: [
                         ,{
-                            itemId: 'codeRepertoryField'
+                            itemId: 'codeRepositoryField'
                             ,padding: '5 0 0 5'
-                            ,name: 'codeRepertory'
+                            ,name: 'codeRepository'
                             ,fieldLabel: '代码库'
                             ,renderer: function (value, field) {
-
                                 var record = me.down('form').getForm().getRecord();
-
-                                return record.get('codeRepertoryVO').url;
+                                return record.get('codeRepositoryVO')?record.get('codeRepositoryVO').url:'';
                             }
                         }
                         ,{
@@ -65,10 +63,8 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoDetailWindow', {
     ,setModel: function (model) {
         if (model && model.get('id')) {
             this.down('form').getForm().loadRecord(model);
-
         } else {
             this.down('form').getForm().reset();
-
         }
     }
 

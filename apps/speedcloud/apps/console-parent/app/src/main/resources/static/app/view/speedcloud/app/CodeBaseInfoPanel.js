@@ -1,7 +1,10 @@
 Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
     extend: 'Ext.panel.Panel'
     , xtype: 'speedcloud.app.CodeBaseInfoPanel'
-    , title: '代码库详细信息'
+    , alias: 'widget.speedcloud.app.CodeBaseInfoPanel'
+    , title: '代码基本信息'
+    , bodyCls: 'app-dashboard'
+    // , bodyPadding: '10 10'
     , layout: 'border'
     , requires: [
         'AM.view.speedcloud.app.CodeBaseInfoController'
@@ -12,15 +15,27 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
         ,'AM.view.speedcloud.app.CodeBaseInfoDetailWindow'
     ]
     ,controller: 'speedcloud.app.CodeBaseInfoController'
+    ,constructor:function(cfg){
+        var me = this;
+        cfg = cfg || {}
+
+        me.callParent([Ext.apply({
+            viewModel : {
+                stores:{
+                    store:Ext.create('AM.store.speedcloud.app.CodeBaseInfoStore').load()
+                }
+            }
+        }, cfg)])
+    }
     ,initComponent: function() {
         var me = this;
-
+        me.enableBubble('createMainTabPanel');
         Ext.apply(me, {
             items: [
                 {
                     xtype: 'grid'
                     ,region:'center'
-                    ,store: Ext.create('AM.store.speedcloud.app.CodeBaseInfoStore').load()
+                    ,bind:{store: '{store}'}
                     ,columnLines: true
                     ,reference:'mainGridPanel'
                     ,columns: [
@@ -31,7 +46,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                             ,items: [{
                                 iconCls: 'x-fa fa-eye'
                                 ,tooltip: '详情'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -41,9 +56,9 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                         }
                         ,{
                             xtype: 'gridcolumn'
-                            ,dataIndex: 'codeRepertory'
+                            ,dataIndex: 'codeRepository'
                             ,renderer: function(value, metaData, record, rowIndex, colIndex, store, view) {
-                                return record.get("codeRepertoryVO")?record.get("codeRepertoryVO").url:'';
+                                return record.get("codeRepositoryVO")?record.get("codeRepositoryVO").url:'';
                             }
                             ,text: '代码库'
                             
@@ -65,9 +80,9 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'edit'
+                                iconCls: 'fas fa-pencil-alt'
                                 ,tooltip: '修改'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -80,9 +95,9 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'delete'
+                                iconCls: 'fas fa-minus-circle red'
                                 ,tooltip: '删除'
-                                ,handler: function(grid, rowIndex, colIndex) {
+                                ,handler: function(grid, rowIndex, colIndex, item, event, record) {
                                     var record = grid.getStore().getAt(rowIndex);
                                     grid.getSelectionModel().deselectAll()
                                     grid.getSelectionModel().select(record)
@@ -101,7 +116,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                             items: [
                                 {
                                     xtype: 'button'
-                                    ,iconCls: 'add'
+                                    ,iconCls: 'fas fa-plus-circle'
                                     ,text: '新增'
                                     ,listeners: {
                                         click: 'onAddButtonClick'
@@ -109,7 +124,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'edit'
+                                    ,iconCls: 'fas fa-pencil-alt'
                                     ,text: '修改'
                                     ,listeners: {
                                         click: 'onEditButtonClick'
@@ -117,7 +132,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'delete'
+                                    ,iconCls: 'fas fa-minus-circle red'
                                     ,text: '删除'
                                     ,listeners: {
                                         click: 'onDeleteButtonClick'
@@ -126,7 +141,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                                 ,'-'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '查询'
                                     ,listeners: {
                                         click: 'onSimpleSearchButtonClick'
@@ -135,7 +150,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                                 ,'->'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search-plus'
                                     ,text: '高级查询'
                                     ,listeners: {
                                         click: 'showSearchWindow'
@@ -143,7 +158,7 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                                 }
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-download'
                                     ,text: '导出'
                                     ,listeners: {
                                         click: 'onExportButtonClick'
@@ -158,18 +173,19 @@ Ext.define('AM.view.speedcloud.app.CodeBaseInfoPanel', {
                         }
                     ]
                     ,selModel: 'checkboxmodel'
-                    ,listeners: {
-                        beforeshow: {
-                            fn: me.onBeforeShow
-                            ,scope: me
-                        }
-                        ,beforehide: {
-                            fn: me.onPanelBeforeHide
-                            ,scope: me
-                        }
-                    }
+                    ,listeners: {}
                 }
             ]
+            ,listeners: {
+            	beforeshow: {
+                    fn: me.onBeforeShow
+                    ,scope: me
+                }
+              	,beforehide: {
+                	fn: me.onPanelBeforeHide
+                  	,scope: me
+				}
+			}
         });
 
         me.add({xtype:'speedcloud.app.CodeBaseInfoAddWindow',reference:'mainAddWindow',listeners:{saved:'reloadStore'}})

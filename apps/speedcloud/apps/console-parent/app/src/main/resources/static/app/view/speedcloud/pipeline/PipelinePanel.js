@@ -1,7 +1,7 @@
 Ext.define('AM.view.speedcloud.pipeline.PipelinePanel', {
     extend: 'Ext.panel.Panel'
     , xtype: 'speedcloud.pipeline.PipelinePanel'
-    , title: '流水线'
+    , title: '运维流水线'
     , layout: 'border'
     , requires: [
         'AM.view.speedcloud.pipeline.PipelineController'
@@ -83,7 +83,7 @@ Ext.define('AM.view.speedcloud.pipeline.PipelinePanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'edit'
+                                iconCls: 'fas fa-pencil-alt'
                                 ,tooltip: '修改'
                                 ,handler: function(grid, rowIndex, colIndex) {
                                     var record = grid.getStore().getAt(rowIndex);
@@ -98,7 +98,7 @@ Ext.define('AM.view.speedcloud.pipeline.PipelinePanel', {
                             ,menuDisabled: true
                             ,width:30
                             ,items: [{
-                                iconCls: 'delete'
+                                iconCls: 'fas fa-minus-circle red'
                                 ,tooltip: '删除'
                                 ,handler: function(grid, rowIndex, colIndex) {
                                     var record = grid.getStore().getAt(rowIndex);
@@ -153,7 +153,7 @@ Ext.define('AM.view.speedcloud.pipeline.PipelinePanel', {
                                 ,'->'
                                 ,{
                                     xtype: 'button'
-                                    ,iconCls: 'search'
+                                    ,iconCls: 'fas fa-search'
                                     ,text: '高级查询'
                                     ,listeners: {
                                         click: 'showSearchWindow'

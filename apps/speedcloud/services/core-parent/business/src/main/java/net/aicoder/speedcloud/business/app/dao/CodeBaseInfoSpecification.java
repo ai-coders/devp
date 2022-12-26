@@ -41,22 +41,13 @@ public class CodeBaseInfoSpecification implements Specification<CodeBaseInfo>{
 
 
 	private void tryAddTidPredicate(List<Predicate> predicateList, Root<CodeBaseInfo> root, CriteriaBuilder cb){
-
-		if (null != condition.getTid() ) {
-			predicateList.add(cb.equal(root.get(CodeBaseInfo.PROPERTY_TID).as(Long.class), condition.getTid()));
-		}
-
-		if (null != condition.getTidMax() ) {
-			predicateList.add(cb.greaterThanOrEqualTo(root.get(CodeBaseInfo.PROPERTY_TID).as(Long.class), condition.getTidMax()));
-		}
-
-		if (null != condition.getTidMin() ) {
-			predicateList.add(cb.lessThan(root.get(CodeBaseInfo.PROPERTY_TID).as(Long.class), condition.getTidMin()));
-		}
+        if (null != condition.getTid() ) {
+            predicateList.add(cb.equal(root.get(CodeBaseInfo.PROPERTY_TID).as(Long.class), condition.getTid()));
+        }  
 	}
 	private void tryAddCodeRepositoryPredicate(List<Predicate> predicateList, Root<CodeBaseInfo> root, CriteriaBuilder cb){
 	    if (null != condition.getCodeRepository() ) {
-            predicateList.add(cb.equal(root.get(CodeBaseInfo.PROPERTY_CODE_REPERTORY).as(Long.class), condition.getCodeRepository()));
+            predicateList.add(cb.equal(root.get(CodeBaseInfo.PROPERTY_CODE_REPOSITORY).as(String.class), condition.getCodeRepository()));
         }
 	}
 	private void tryAddLanguagePredicate(List<Predicate> predicateList, Root<CodeBaseInfo> root, CriteriaBuilder cb){

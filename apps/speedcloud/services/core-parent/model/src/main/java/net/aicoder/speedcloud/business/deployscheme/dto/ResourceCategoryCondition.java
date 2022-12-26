@@ -1,73 +1,31 @@
 package net.aicoder.speedcloud.business.deployscheme.dto;
 
-import com.yunkang.saas.common.framework.eo.SaaSCondition;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-
 @ApiModel(value = "查询部署资源类别使用的DTO")
-public class ResourceCategoryCondition extends SaaSCondition{
+@Getter @Setter
+public class ResourceCategoryCondition {
 
-	@ApiModelProperty(value = "租户id")
-	private Long tid;
-	@ApiModelProperty(value = "租户id最大值")
-	private Long tidMax;
-	@ApiModelProperty(value = "租户id最小值")
-	private Long tidMin;
+    @ApiModelProperty(value = "租户id")
+    private Long tid;
 	@ApiModelProperty(value = "名称")
 	private String name;
 	@ApiModelProperty(value = "代码")
 	private String code;
 	@ApiModelProperty(value = "图标")
 	private String icon;
+	@ApiModelProperty(value = "排序")
+	private Integer idx;
+	@ApiModelProperty(value = "排序最大值")
+	private Integer idxMax;
+	@ApiModelProperty(value = "排序最小值")
+	private Integer idxMin;
 
-
-	public Long getTid(){
-		return tid;
-	}
-	public void setTid(Long tid) {
-		this.tid = tid;
-	}
-
-	public Long getTidMin(){
-		return tidMin;
-	}
-	public void setTidMin(Long tidMin) {
-		this.tidMin = tidMin;
-	}
-
-	public Long getTidMax(){
-		return tidMax;
-	}
-	public void setTidMax(Long tidMax) {
-		this.tidMax = tidMax;
-	}
-
-
-	public String getName(){
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
-	public String getCode(){
-		return code;
-	}
-	public void setCode(String code) {
-		this.code = code;
-	}
-
-
-	public String getIcon(){
-		return icon;
-	}
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
 
 
 

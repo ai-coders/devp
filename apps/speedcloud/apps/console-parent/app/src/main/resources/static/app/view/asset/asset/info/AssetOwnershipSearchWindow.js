@@ -8,7 +8,7 @@ Ext.define('AM.view.asset.asset.info.AssetOwnershipSearchWindow', {
     ,layout: {
         type: 'fit'
     }
-    ,title: 'IT资产归属高级查询'
+    ,title: '资产归属高级查询'
     ,maximizable: true
     ,closeAction:'hide'
     ,initComponent: function () {
@@ -194,7 +194,7 @@ Ext.define('AM.view.asset.asset.info.AssetOwnershipSearchWindow', {
                         }
                         ,{
                             xtype: 'button'
-                            ,iconCls: 'search'
+                            ,iconCls: 'fas fa-search'
                             ,text: '查询'
                             ,listeners: {
                                 click: {fn: me.onSearchButtonClick,scope: me}

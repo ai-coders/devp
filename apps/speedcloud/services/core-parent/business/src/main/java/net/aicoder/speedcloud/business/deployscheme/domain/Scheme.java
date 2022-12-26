@@ -123,14 +123,14 @@ public class Scheme extends BaseEntity<Long>{
     * [所属项目]
     */
     @Column(name = "project", nullable = false, updatable = true)
-	private Long project;
+	private String project;
 
     /**
     * 所属环境
     * [所属环境]
     */
     @Column(name = "env", nullable = false, updatable = true)
-	private Long env;
+	private String env;
 
 	public Long getTid(){
 		return tid;
@@ -202,17 +202,17 @@ public class Scheme extends BaseEntity<Long>{
 		this.notes = notes;
 	}
 
-	public Long getProject(){
+	public String getProject(){
 		return project;
 	}
-	public void setProject(Long project) {
+	public void setProject(String project) {
 		this.project = project;
 	}
 
-	public Long getEnv(){
+	public String getEnv(){
 		return env;
 	}
-	public void setEnv(Long env) {
+	public void setEnv(String env) {
 		this.env = env;
 	}
 

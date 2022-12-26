@@ -3,37 +3,39 @@ package net.aicoder.speedcloud.business.app.domain;
 import com.yunkang.saas.common.jpa.BaseEntity;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
-import org.hibernate.annotations.Table;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
 
 
 /**
- * 应用
+ * 应用（系统）
  * @author icode
  */
-@Entity
-@Table(appliesTo = "app_base_info", comment = "[应用]")
+@Entity()
+@Table(name = "app_app_base_info")
 //@DynamicUpdate
 //@DynamicInsert
-public class AppBaseInfo extends BaseEntity<Long>{
+//@Where(clause="delete=0")
+public class AppBaseInfo extends BaseEntity<String>{
 
 	public static final String PROPERTY_TID = "tid";
-	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_PROJECT = "project";
 	public static final String PROPERTY_TYPE = "type";
+	public static final String PROPERTY_NAME = "name";
+	public static final String PROPERTY_CODE = "code";
 	public static final String PROPERTY_STATUS = "status";
 	public static final String PROPERTY_DESCRIPTION = "description";
 	public static final String PROPERTY_REGIST_TIME = "registTime";
-	public static final String PROPERTY_PROJECT = "project";
 
 
     @Id
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "id", length = 32)
+    private String id;
 
 
     /**
@@ -44,6 +46,22 @@ public class AppBaseInfo extends BaseEntity<Long>{
 	private Long tid;
 
     /**
+    * 所属项目
+    * 
+    */
+    @Column(name = "project", nullable = false, updatable = true)
+	@Size(max = 255, message = "所属项目超长，最多255个字符")
+	private String project;
+
+    /**
+    * 应用类型
+    * 
+    */
+    @Column(name = "type", nullable = false, updatable = true)
+	@Size(max = 255, message = "应用类型超长，最多255个字符")
+	private String type;
+
+    /**
     * 名称
     * 
     */
@@ -52,12 +70,12 @@ public class AppBaseInfo extends BaseEntity<Long>{
 	private String name;
 
     /**
-    * 应用类型
+    * 代码
     * 
     */
-    @Column(name = "type", nullable = true, updatable = true)
-	@Size(max = 255, message = "应用类型超长，最多255个字符")
-	private String type;
+    @Column(name = "code", nullable = false, updatable = false)
+	@Size(max = 255, message = "代码超长，最多255个字符")
+	private String code;
 
     /**
     * 状态
@@ -82,18 +100,25 @@ public class AppBaseInfo extends BaseEntity<Long>{
 	@Size(max = 255, message = "注册时间超长，最多255个字符")
 	private String registTime;
 
-    /**
-    * 所属项目
-    * 
-    */
-    @Column(name = "project", nullable = false, updatable = true)
-	private Long project;
-
 	public Long getTid(){
 		return tid;
 	}
 	public void setTid(Long tid) {
 		this.tid = tid;
+	}
+
+	public String getProject(){
+		return project;
+	}
+	public void setProject(String project) {
+		this.project = project;
+	}
+
+	public String getType(){
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public String getName(){
@@ -103,11 +128,11 @@ public class AppBaseInfo extends BaseEntity<Long>{
 		this.name = name;
 	}
 
-	public String getType(){
-		return type;
+	public String getCode(){
+		return code;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 	public String getStatus(){
@@ -131,18 +156,11 @@ public class AppBaseInfo extends BaseEntity<Long>{
 		this.registTime = registTime;
 	}
 
-	public Long getProject(){
-		return project;
-	}
-	public void setProject(Long project) {
-		this.project = project;
-	}
 
-
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -7,6 +7,9 @@ Ext.define('AM.view.speedcloud.pipeline.PipelineEditPanel', {
         'AM.view.speedcloud.pipeline.PipelineEditController'
         ,'AM.view.speedcloud.pipeline.PipelineEditStageWindow'
         ,'AM.view.speedcloud.pipeline.PipelineEditStageNodeWindow'
+        ,'AM.store.speedcloud.pipeline.task.PipelineTaskParamStore'
+        ,'AM.store.speedcloud.pipeline.PipelineStageStore'
+        ,'AM.store.speedcloud.pipeline.PipelineParamStore'
     ]
     ,bodyPadding:10
     ,bodyCls: 'app-dashboard'
@@ -97,7 +100,7 @@ Ext.define('AM.view.speedcloud.pipeline.PipelineEditPanel', {
                             ,items: [
                                 {
                                     xtype: 'button'
-                                    // ,iconCls: 'accept'
+                                    // ,iconCls: 'fas fa-save'
                                     //,iconCls: 'x-fa fa-plus-circle'
                                     ,text: '确定'
                                     ,scale: 'large'

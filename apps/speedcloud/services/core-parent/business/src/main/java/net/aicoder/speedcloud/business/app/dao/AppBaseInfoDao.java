@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 
 
 /**
- * 应用的数据库操作
+ * 应用（系统）的数据库操作
  * @author icode
  */
 @Repository("appBaseInfoDao")
-public interface AppBaseInfoDao extends BaseDao<AppBaseInfo, Long>{
+public interface AppBaseInfoDao extends BaseDao<AppBaseInfo, String>{
 
 
 }

@@ -7,6 +7,17 @@ import org.springframework.context.annotation.Import;
 
 @Configuration
 @Import({LocalSecurityAutoConfiguration.class, MonitorConfig.class})
+
 public class SecurityConfig {
+
+
+
+//    @Bean
+//    public RedisOperationsSessionRepository redisOperationsSessionRepository(RedisOperationsSessionRepository redisOperationsSessionRepository){
+//        redisOperationsSessionRepository.setRedisKeyNamespace("abcdefg");
+//        return redisOperationsSessionRepository;
+//    }
+
+
 
 }

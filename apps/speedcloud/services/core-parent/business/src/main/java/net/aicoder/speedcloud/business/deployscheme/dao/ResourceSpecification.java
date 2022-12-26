@@ -38,7 +38,7 @@ public class ResourceSpecification implements Specification<Resource>{
 		tryAddDescriptionPredicate(predicateList, root, cb);
 		tryAddVersionPredicate(predicateList, root, cb);
 		tryAddSeqPredicate(predicateList, root, cb);
-		tryAddEvnPredicate(predicateList, root, cb);
+		tryAddEnvPredicate(predicateList, root, cb);
 		tryAddStatusPredicate(predicateList, root, cb);
 		tryAddProjectPredicate(predicateList, root, cb);
 		tryAddOuterResourcePredicate(predicateList, root, cb);
@@ -55,14 +55,6 @@ public class ResourceSpecification implements Specification<Resource>{
 
 		if (null != condition.getTid() ) {
 			predicateList.add(cb.equal(root.get(Resource.PROPERTY_TID).as(Long.class), condition.getTid()));
-		}
-
-		if (null != condition.getTidMax() ) {
-			predicateList.add(cb.greaterThanOrEqualTo(root.get(Resource.PROPERTY_TID).as(Long.class), condition.getTidMax()));
-		}
-
-		if (null != condition.getTidMin() ) {
-			predicateList.add(cb.lessThan(root.get(Resource.PROPERTY_TID).as(Long.class), condition.getTidMin()));
 		}
 	}
 	private void tryAddNamePredicate(List<Predicate> predicateList, Root<Resource> root, CriteriaBuilder cb){
@@ -82,12 +74,12 @@ public class ResourceSpecification implements Specification<Resource>{
 	}
 	private void tryAddCategoryPredicate(List<Predicate> predicateList, Root<Resource> root, CriteriaBuilder cb){
 	    if (null != condition.getCategory() ) {
-            predicateList.add(cb.equal(root.get(Resource.PROPERTY_CATEGORY).as(Long.class), condition.getCategory()));
+            predicateList.add(cb.equal(root.get(Resource.PROPERTY_CATEGORY).as(String.class), condition.getCategory()));
         }
 	}
 	private void tryAddTypePredicate(List<Predicate> predicateList, Root<Resource> root, CriteriaBuilder cb){
 	    if (null != condition.getType() ) {
-            predicateList.add(cb.equal(root.get(Resource.PROPERTY_TYPE).as(Long.class), condition.getType()));
+            predicateList.add(cb.equal(root.get(Resource.PROPERTY_TYPE).as(String.class), condition.getType()));
         }
 	}
 	private void tryAddNotesPredicate(List<Predicate> predicateList, Root<Resource> root, CriteriaBuilder cb){
@@ -119,9 +111,9 @@ public class ResourceSpecification implements Specification<Resource>{
 			predicateList.add(cb.lessThan(root.get(Resource.PROPERTY_SEQ).as(Integer.class), condition.getSeqMin()));
 		}
 	}
-	private void tryAddEvnPredicate(List<Predicate> predicateList, Root<Resource> root, CriteriaBuilder cb){
-	    if (null != condition.getEvn() ) {
-            predicateList.add(cb.equal(root.get(Resource.PROPERTY_EVN).as(Long.class), condition.getEvn()));
+	private void tryAddEnvPredicate(List<Predicate> predicateList, Root<Resource> root, CriteriaBuilder cb){
+	    if (null != condition.getEnv() ) {
+            predicateList.add(cb.equal(root.get(Resource.PROPERTY_ENV).as(Long.class), condition.getEnv()));
         }
 	}
 	private void tryAddStatusPredicate(List<Predicate> predicateList, Root<Resource> root, CriteriaBuilder cb){
